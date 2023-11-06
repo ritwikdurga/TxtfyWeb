@@ -42,12 +42,24 @@ Before you can start using this project, you need to set up your environment. Fo
 
 **Download External Executable Files:**
 
-   To proceed with this project, you will need two external executable files. Download them from the following links:
+- **For Windows:**
+  
+  To proceed with this project, you will need two external executable files. Download them from the following links:
 
-   - [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe)
-   - [GTK3](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases/download/2022-01-04/gtk3-runtime-3.24.31-2022-01-04-ts-win64.exe)
+  - [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe)  
+  - [GTK3](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases/download/2022-01-04/gtk3-runtime-3.24.31-2022-01-04-ts-win64.exe)
 
-   Save these downloaded files in the project directory.
+  Save these downloaded files in the project directory.
+
+- **For Mac:**
+
+  To proceed with this project on macOS, you can use Homebrew to easily install Tesseract. If you don't have Homebrew installed, you can get it from [Homebrew's official website](https://brew.sh/).
+
+  Open your terminal and run the following command to install Tesseract:
+
+  ```
+  brew install tesseract
+  ```
 
 **Setup Process:**
 
