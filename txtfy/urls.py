@@ -4,9 +4,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from home.views import logout_view
 from django.urls import path, include
-from user.views import custom_404_view
 
-handler404 = custom_404_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
