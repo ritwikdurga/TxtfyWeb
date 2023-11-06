@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE >
+<html>
+  <head>
+    <title>Profile-Txtfy</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="{% static 'user/user_profile.css' %}" />
+
+    <link rel="icon" type="image/x-icon" href="{% static 'user/favicon.ico' %}" />
+    <script defer src="{% static 'user/user_profile.js' %}"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="topfield">
+      <div id="heading">
+        <img id="th3" src="{% static 'user/favicon.ico' %}" alt="Logo" />
+        <span id="th1">TxtfyWeb</span>
+      </div>
+      <a href="{% url 'home'%}" id="homeicon">
+        <span class="material-icons" style="font-size: 69px;">home</span>
+      </a>
+    </div>
+    
+    <div class="d1">
+      <h1>Your Profile</h1>
+      <div id="edit">
+        <form method="POST" action="{% url 'profile' %}">
+          {% csrf_token %}
+          <div class="fieldholder">
+            <i class="material-icons" id="m1">person</i>
+            <input type="text" id="name" name="name" value="{{ user.first_name }} {{ user.last_name }}" disabled />
+            
+            <button type="button" id="edit_button" onclick="editfunction()"><span class="material-symbols-outlined">edit</span></button>
+            
+          </div>
+          <button type="submit" class="edit_s" id="edit_save">Save</button>
+          <div class="fieldholder">
+            <i class="material-icons" id="m2">mail</i>
+            <input type="text" id="eml" name="eml" value="{{ user.email }}" disabled />
+          </div>
+          <br />
+          
+        </form>
+      </div>
+      <span id="error" style="color: green;">
+        {% if messages %}
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        {% endif %}
+      </span>
+      <div id="change_password">
+        <button class="next" id="next" type="submit">
+          <span class="button-text" onclick="window.location.href='{% url 'change_password' %}'">Change Password</span>
+        </button>
+      </div>
+    </div>
+    <div class="d2">
+      <img src="{% static 'user/profile_page_image.jpg' %}">
+    </div>
+  </body>
+</html>

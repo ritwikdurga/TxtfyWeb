@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Open+Sans:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+.email {
+  position: absolute;
+  top: 24%;
+  right: 5%;
+  width: 40%;
+  padding: 30px;
+  background-color: white;
+  height: 60%;
+  font-family: Figtree, sans-serif;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.01;
+  }
+
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+
+#heading {
+  grid-column: 2/3;
+  margin-right: 2%;
+  grid-row: 1/2;
+  position: relative;
+  font-size: 25px;
+  padding-left: 5px;
+  animation: 750ms ease-in-out 1 forwards slideOut;
+  top: 0%;
+  display: flex; 
+  align-items: center;
+}
+
+#th1 {
+  font-family: 'Oswald', serif;
+  font-size: 45px;
+  color: rgb(0, 0, 0);
+  margin-left: 10px; 
+}
+
+#th2 {
+  font-family: 'Arvo', serif;
+  font-size: 45px;
+  color: black;
+}
+#th3 {
+  width: 35px;
+  height: 40px;
+}
+
+.d2 {
+  position: absolute;
+  width: 40%;
+  top: 10%; 
+  left: 5%;
+  padding: 20px;
+  height: 60%;
+  font-family: Figtree, sans-serif;
+  animation: 750ms ease-in-out 1 forwards slideOut;
+}
+.d2 img {
+  max-width: 100%; 
+  max-height: 100%;
+}
+
+
+#error {
+  color: red;
+}
+
+.fieldholder {
+  position: relative;
+  padding: 20px 0;
+}
+
+.fieldholder input {
+  border: none;
+  border-bottom: 3px solid #ccc;
+  outline: none;
+  display: block;
+  padding: 10px 0px;
+  font-size: 16px;
+  width: 90%;
+}
+
+.fieldholder label {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0px;
+  color: #ccc;
+  font-size: 16px;
+  transform: translateY(30px);
+  transition: all 0.2s ease-in-out;
+}
+
+.fieldholder input:focus ~ label,
+.fieldholder input:valid ~ label {
+  transform: translateY(0);
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+}
+.fieldholder input:focus {
+  border-color: black;
+}
+
+.p {
+  transform: translate(0px, -10px);
+  margin-left: 470px;
+}
+
+button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  transition: all 1.5s ease;
+}
+
+.button-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 0.75rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.next {
+  width: 12rem;
+  height: auto;
+}
+
+.circle {
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #444444;
+  border-radius: 1.625rem;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+
+.icon.arrow {
+  left: 0.625rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+  transition: all 0.5s linear;
+}
+
+.icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+  transition: all 1.5s ease;
+}
+
+.next:hover .circle {
+  width: 100%;
+  transition: all 600ms ease;
+  background: #18181b;
+}
+
+.next:hover .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+
+.next:hover .button-text {
+  color: #fff;
+}
+
+#container {
+  display: flex;
+  float: right;
+  position: relative;
+  padding-right: 50px;
+}
+
+#msg {
+  color: red;
+  display: none;
+}

@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/x-icon" href="{% static 'user/favicon.ico' %}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup-Txtfy</title>
+    <link rel="stylesheet" href="{% static 'user/signup_email.css' %}" />
+    <script defer src="{% static 'user/signup_email.js' %}"></script>
+    {% if not messages %}
+      <style>
+        .email {
+          animation: 750ms ease-in-out 1 forwards slideIn;
+        }
+        
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+            opacity: 0.01;
+          }
+        
+          to {
+            transform: translateX(0%);
+            opacity: 1;
+          }
+        }
+      </style>
+    {% endif %}
+    {% if messages %}
+      <script>
+        window.onload = function () {
+          document.getElementById('x').style.color = 'red'
+          document.getElementById('eml').style.borderColor = 'red'
+        }
+      </script>
+    {% endif %}
+  </head>
+  <body>
+    <div id="heading">
+      <img id="th3" src="{% static 'user/favicon.ico' %}" alt="Logo" />
+      <span id="th1">TxtfyWeb</span>
+    </div>
+    <div class="email">
+      <h1 class="h">
+        <a id="sin" href="#" style="text-decoration: none; color:black">Sign Up</a>
+        <span id="or" style="color:#eff8b0">|</span>
+        <a style="text-decoration: none; color: grey" href="{% url 'signin' %}" id="sup">Sign In</a>
+      </h1>
+      <!-- <p class="p1">Enter Email Address</p> -->
+      <form action="{% url 'signup' %}" method="post" onsubmit="return validateEmailAddress(eml.value);">
+        {% csrf_token %}
+        <div class="fieldholder">
+          <input type="text" id="eml" name="eml" size="50" required />
+          <br />
+          <label for="eml" id="x">Email Address</label>
+        </div>
+
+        <div id="container">
+          <button class="next" id="next" type="submit">
+            <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
+            <span class="button-text">Next</span>
+          </button>
+        </div>
+
+        <span id="error" style="color: red;">
+          {% if messages %}
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          {% endif %}
+        </span>
+        <span id="msg">Invalid Email Address</span>
+      </form>
+    </div>
+    <div class="d2">
+      <img src="{% static 'user/SIGNUP_EMAIL.jpg' %}" />
+    </div>
+  </body>
+</html>

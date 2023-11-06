@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signin-Txtfy</title>
+    <link rel="stylesheet" href="{% static 'signin/Signin.css' %}" />
+    {% if not messages %}
+      <style>
+        .d1 {
+          animation: 750ms ease-in-out 1 forwards slideIn;
+        }
+        @keyframes slideIn {
+          from {
+            transform: translateX(-100%);
+            opacity: 0.01;
+          }
+        
+          to {
+            transform: translateX(0%);
+            opacity: 1;
+          }
+        }
+      </style>
+    {% endif %}
+    <link rel="icon" type="image/x-icon" href="{% static 'user/favicon.ico'%}" />
+    <script defer src="{% static 'signin/Signin.js' %}"></script>
+
+    {% if messages %}
+      <script>
+        window.onload = function () {
+          var errorMessages = document.querySelectorAll('[id="error"] span[style="color: red;"]')
+        
+          if (errorMessages.length > 0) {
+            document.getElementById('x').style.color = 'red'
+            document.getElementById('x1').style.color = 'red'
+            document.getElementById('eml').style.borderColor = 'red'
+            document.getElementById('pwd').style.borderColor = 'red'
+          }
+        }
+      </script>
+    {% endif %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+  </head>
+
+  <body>
+    <div id="heading">
+      <img id="th3" src="{% static 'user/favicon.ico' %}" alt="Logo" />
+      <span id="th1">TxtfyWeb</span>
+    </div>
+    <div class="d1">
+      <h1 class="h">
+        <a id="sin" href="#" style="text-decoration: none; color:black">Sign In</a>
+        <span id="or" style="color:#eff8b0">|</span>
+        <a style="text-decoration: none; color: grey" href="{% url 'signup' %}" id="sup">Sign Up</a>
+      </h1>
+
+      <form onsubmit="var the_result = validateEmailAddress(eml.value); return the_result;" method="post" action="{% url 'signin' %}">
+        {% csrf_token %}
+
+        <div class="fieldholder">
+          <input type="text" id="eml" name="eml" size="50" required />
+          <br />
+          <label for="eml" id="x">Email Address</label>
+        </div>
+
+        <div class="fieldholder">
+          <input type="password" id="pwd" name="pwd" size="50" required />
+          <label for="pwd pfield" id="x1">Enter Password</label>
+          <i class="far fa-eye eye-icon" id="togglePassword"></i>
+        </div>
+
+        <div id="container">
+          <button class="next" id="next" type="submit">
+            <span class="circle" aria-hidden="true"><span class="icon arrow"></span></span>
+            <span class="button-text">Sign in</span>
+          </button>
+        </div>
+        <span>
+          {% if messages %}
+            {% for message in messages %}
+              <span style="color: 
+                  {% if message.tags == 'error' %}
+                  red
+                {% elif message.tags == 'success' %}
+                green
+                {% endif %};">
+                {{ message }}
+              </span>
+            {% endfor %}
+          {% endif %}
+        </span>
+        <span id="msg">Invalid Email Address</span>
+
+        <br />
+        <div id="ForgotPassword" style="margin-top: 1%;">
+          <a href="{% url 'password_reset' %}">ForgotPassword?</a>
+        </div>
+      </form>
+    </div>
+    <div class="d2">
+      <img src="{% static 'signin/signin.png' %}" />
+    </div>
+  </body>
+</html>

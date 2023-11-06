@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" type="image/x-icon" href="{% static 'user/favicon.ico' %}" />
+    <div id="heading">
+      <img id="th3" src="{% static 'user/favicon.ico' %}" alt="Logo" />
+      <span id="th1">TxtfyWeb</span>
+    </div>
+    <title>Change Password</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="{% static 'user/change_pwd.css' %}" />
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script defer src="{% static 'user/user_profile.js' %}"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="d1">
+      <h1>Change Password</h1>
+      <span class="fieldholder1" id="name">
+        <i class="material-icons" id="person">person</i>
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+      </span>
+      <div id="pass_edit">
+        <form method="POST" action="{% url 'change_password' %}">
+          {% csrf_token %}
+          <div class="fieldholder">
+            <input type="password" id="opwd" name="opwd" size="50" required />
+            <label for="pwd pfield" id="x3">Enter Current Password</label>
+            <i class="far fa-eye eye-icon" id="toggleCurrentPassword"></i>
+          </div>
+          <div class="fieldholder">
+            <input type="password" id="pwd" name="pwd" size="50" required />
+            <label for="pwd pfield" id="x1">Enter New Password</label>
+            <i class="far fa-eye eye-icon" id="togglePassword"></i>
+          </div>
+
+          <div class="fieldholder">
+            <input type="password" id="cpwd" name="cpwd" size="50" required />
+
+            <label for="cpwd pfield" id="x2">Confirm New Password</label>
+            <i class="far fa-eye eye-icon" id="toggleConfirmPassword"></i>
+          </div>
+          <div id="errorandbuttons">
+            <span id="error" style="color: red;">
+              {% if messages %}
+                {% for message in messages %}
+                  {{ message }}
+                {% endfor %}
+              {% endif %}
+            </span>
+            <div id="buttondiv">
+              <button type="button" id="back" onclick="window.location.href='{% url 'profile' %}'">Back</button>
+              <button type="submit" class="edit_up" id="update_password">Update</button>
+            </div>
+          </div>
+          <br />
+        </form>
+      </div>
+    </div>
+    <div class="d2">
+      <img src="{% static 'user/change_password.jpg' %}" />
+    </div>
+  </body>
+</html>

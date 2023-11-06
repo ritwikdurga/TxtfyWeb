@@ -1,0 +1,411 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Open+Sans:wght@300;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0.01;
+  }
+
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@keyframes slideOut {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.01;
+  }
+
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+
+#heading {
+  grid-column: 2/3;
+  margin-right: 2%;
+  grid-row: 1/2;
+  position: relative;
+  font-size: 25px;
+  padding-left: 5px;
+  animation: 750ms ease-in-out 1 forwards slideOut;
+  top: 0%;
+  display: flex; 
+  align-items: center;
+}
+
+#th1 {
+  font-family: 'Oswald', serif;
+  font-size: 45px;
+  color: rgb(0, 0, 0);
+  margin-left: 10px; 
+}
+#th2 {
+  font-family: "Arvo", serif;
+  font-size: 45px;
+  color: black;
+}
+#th3 {
+  width: 35px;
+  height: 40px;
+}
+
+/* Add styles for the left half of the page with the image */
+.d2 {
+  position: absolute;
+  width: 50%; /* Set the width to occupy half of the page */
+  top: 18.2%; /* Adjust the top value as needed */
+  left: 5%; /* Position it on the left side */
+  padding: 20px;
+  /* background-color: white; */
+  height: 60%;
+  font-family: Figtree, sans-serif;
+  animation: 750ms ease-in-out 1 forwards slideOut;
+}
+
+/* Style the profile image */
+.d2 img {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of its container */
+  max-height: 100%; /* Ensure the image doesn't exceed the height of its container */
+}
+
+.d1 {
+  position: absolute;
+  animation: 750ms ease-in-out 1 forwards slideIn;
+  width: 40%;
+  /* Adjust the width to make it elongated */
+  top: 24%;
+  /* Adjust the top value to position it somewhat above */
+  right: 5%;
+  padding: 20px;
+  background-color: white;
+  height: 60%;
+  font-family: Figtree, sans-serif;
+}
+
+button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  transition: all 1.5s ease;
+}
+
+.button-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 0;
+  margin: 0 0 0 0.75rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.next {
+  width: 12rem;
+  height: auto;
+}
+
+#profile h1 {
+  margin-bottom: 0; /* Remove margin at the bottom of the heading */
+}
+
+form {
+  margin-top: 0; /* Remove margin at the top of the form */
+}
+
+.fieldholder input:disabled {
+  color: black; /* Set the color you want for the text */
+  background-color: transparent; /* Set the background color as needed */
+  /* Add any other styles you want to customize */
+}
+
+.material-icons {
+  position: relative;
+  transform: translate(-30px, 40px);
+  /* border: 2px solid red; */
+  height: 28px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+#edit_button {
+  display: inline;
+  position: relative;
+  border: none;
+  margin-left: 65%;
+  transform: translate(0px, -30px);
+  cursor: pointer;
+  background: transparent;
+}
+
+#edit_button:hover {
+  color: blue;
+}
+
+.edit {
+  margin-top: 0%;
+}
+
+.fieldholder {
+  right: -0%;
+  position: relative;
+  padding: 20px 0;
+  height: 35px;
+  /* border:2px solid red; */
+  font-family: "Open sans";
+}
+
+.fieldholder1 {
+  right: -5%;
+  position: relative;
+  padding: 20px 0;
+  height: 35px;
+  font-family: "Open sans";
+}
+
+.fieldholder input {
+  border: none;
+  border-bottom: 3px solid #f8f3f3;
+  outline: none;
+  display: block;
+  padding: 10px 0px;
+  font-size: 16px;
+  width: 75%;
+}
+
+.fieldholder label {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0px;
+  color: #ccc;
+  font-size: 16px;
+  transform: translateY(30px);
+  transition: all 0.2s ease-in-out;
+}
+
+.fieldholder input:focus ~ label,
+.fieldholder input:valid ~ label {
+  transform: translateY(0);
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  /* font-weight: bold; */
+  font-weight: bolder;
+}
+
+.fieldholder input:focus {
+  border-color: black;
+  font-weight: bolder;
+}
+
+.eye-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  margin-right: 25%;
+  font-size: 20px;
+  color: #777;
+}
+
+.eye-icon:hover {
+  color: #333;
+}
+
+/* #pass_edit {
+      display: none;
+    } */
+
+#edit_save {
+  visibility: hidden;
+}
+.edit_up {
+  position: relative;
+  appearance: none;
+  /* background-color: #000000;
+    border: 2px solid #1a1a1a; */
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 0%;
+  min-height: 45px;
+  min-width: 0;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100px;
+  left: 41%;
+  /* min-height: 40px; */
+  will-change: transform;
+}
+.edit_s {
+  position: relative;
+  appearance: none;
+  background-color: #000000;
+  border: 2px solid #1a1a1a;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+
+  /* top: 5%; */
+  /* margin-top: 30%; */
+  /* min-height: 30px; */
+  min-width: 0;
+  display: inline;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100px;
+  /* padding: 8px 20px; */
+  left: 80%;
+  /* min-height: 40px; */
+  will-change: transform;
+}
+
+.edit_s:disabled {
+  pointer-events: none;
+}
+
+.edit_s:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.edit_s:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+#change_password {
+  position: relative; /* Add this */
+  left: 42%; /* Add this */
+  /* bottom: 200px; Add this */
+  width: 200px;
+  min-height: 40px;
+  /* background-color: #000000; */
+  color: #ffffff;
+  /* border: 2px solid #1a1a1a; */
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  /* float: right; */
+  /* padding-right: 58px; */
+}
+#change_password:disabled {
+  pointer-events: none;
+}
+
+#change_password:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+#change_password:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* #buttondiv{
+    position: relative;
+  } */
+
+#back {
+  position: relative;
+  appearance: none;
+  /* background-color: #000000; */
+  /* border: 2px solid #1a1a1a; */
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 0%;
+  min-height: 45px;
+  min-width: 0;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100px;
+  left: 41%;
+  /* min-height: 40px; */
+  will-change: transform;
+}
+
+/* #back:hover {
+    background-color: black;
+    color: white;
+  } */
+
+#error {
+  position: absolute;
+}
+
+#back:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+#back:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+#update_password:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+#update_password:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
