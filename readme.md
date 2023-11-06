@@ -63,7 +63,7 @@ Before you can start using this project, you need to set up your environment. Fo
 
    After downloading the executable files, follow these steps for the setup process:
 
-   - Run the setup script to initiate the installation process.
+   - Run the setup files to initiate the installation process.
    - Follow the on-screen instructions, ensuring not to change the installation location on your computer.
 
 Once you've completed these installation steps, your environment should be ready to use the project. You can now launch the application and start utilizing its features as described in the project description.
