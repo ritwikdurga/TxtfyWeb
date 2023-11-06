@@ -1,0 +1,251 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EditPage-Txtfy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{% static 'editpage/Edit_Page.js' %}"></script>
+    <script src="https://unpkg.com/html2pdf.js@0.10.0/dist/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <link rel="icon" type="image/x-icon" href="{% static 'user/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'editpage/Edit_Page.css' %}" />
+  </head>
+
+  <body>
+    <div class="grid-container">
+      <div id="item1">
+        <div id="temp">
+          <img width="100%" height="85%" onclick="changeBackground(this)" />Plain Background
+        </div>
+        <div id="temp">
+          <img id="t1" src="{% static 'editpage/1.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 1
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/2.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 2
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/3.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 3
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/4.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 4
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/5.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 5
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/6.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 6
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/7.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 7
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/8.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 8
+        </div>
+        <div id="temp">
+          <img src="{% static 'editpage/9.jpeg' %}" width="100%" height="85%" onclick="changeBackground(this)" />Template 9
+        </div>
+      </div>
+
+      <div id="item2">
+        <form method="POST" id="proj_name_form" action="{% url 'editpage:index' project_id=project_id %}">
+          {% csrf_token %}
+          <div class="editable-field">
+            <i class="fa fa-pencil-square-o edit-button"></i>
+            <input id="editable-input" type="text" placeholder="{{ p_name }}" contenteditable="true" onkeydown="handleKeyPress(event)" name="name" />
+          </div>
+        </form>
+
+        <div id="uploaded_list">
+          {% for image in project_images %}
+            <div id="item">
+              <img src="{{ image.image.url }}" alt="project_image" width="300px" />
+            </div>
+          {% endfor %}
+        </div>
+
+        <form method="POST" action="{% url 'editpage:index' project_id=project_id %}" enctype="multipart/form-data" id="upload_form">
+          {% csrf_token %}
+          <div id="upload_more">
+            <input type="file" id="um" hidden name="new_images" accept="image/*" multiple onchange="submitForm(this)" />
+            <label for="um" onclick="showOverlay(event)">Add files</label>
+          </div>
+        </form>
+
+        <div class="overlay" id="overlay"></div>
+        <div class="spanner" id="spanner">
+          <div class="loader"></div>
+          <p>Converting additional images to text, Your continued patience is highly valued!</p>
+        </div>
+      </div>
+
+      <div id="item3">
+        <button type="button" id="back_button" onclick="back_func()">&lt; Back</button>
+        <button type="button" id="use_it" onclick="save_template()">Save Template</button>
+        <button type="button" id="save_copy_button" onclick="save_copy()">Save & Copy</button>
+        <button type="button" id="back_to_home_button" onclick="backToHome()">Back to Home</button>
+
+        <div id="backpage" style="position: relative;">
+          <form id="editor-form" method="POST">
+            <div id="editor-container">
+              <div id="editor"></div>
+              <button type="button" id="copy" onclick="copyToClipboard()" hidden>Copy to Clipboard</button>
+            </div>
+
+            <div id="preview_container" style="display: none;"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <button type="submit" id="save_button">Save</button>
+              <button type="button" id="preview_button" onclick="preview()">Preview</button>
+            </div>
+            <button type="button" id="close_preview_button" onclick="closePreview()" style="display: none; position: absolute; top: 0; right: 0;">Close Preview</button>
+          </form>
+        </div>
+
+        <button class="btn" type="button" id="template_button" onclick="use_template()">
+          <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" class="sparkle">
+            <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z"></path>
+          </svg>
+          <span class="tb">Templates</span>
+        </button>
+
+        <button class="print-button" id="print-button" onclick="DownloadPDF()">
+          <span class="print-icon"></span>
+          <span class="tooltip">Download</span>
+        </button>
+      </div>
+    </div>
+    <p style="display:none;" id="projectid">{{ project_id }}</p>
+
+    <script>
+    var project_id = document.querySelector('#projectid').textContent 
+
+    function save_copy() {
+      document.getElementById('copy').click()
+      const nameInput = document.querySelector('#editable-input').value
+      const formData = new FormData()
+      formData.append('name', nameInput)
+      const url = `/editpage/save_name_edits/${project_id}/`
+      fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken')
+        }
+      }).then((response) => {})
+      generatePDF()
+      setTimeout(()=>{
+        window.location.href = "{% url 'home' %}"
+      },100);
+    }
+
+    let editor
+    document.addEventListener('DOMContentLoaded', function () {
+      let initialText = '{{text|linebreaksbr|safe}}'
+      let decodedText = decodeHtmlEntities(initialText)
+      ClassicEditor.create(document.querySelector('#editor'), {
+        toolbar: ['undo', 'redo', '|', 'bold', 'italic', '|', 'bulletedList', 'numberedList', 'indent', 'outdent'],
+        ui: {
+          poweredBy: {
+            position: 'inside',
+            side: 'right',
+            label: ' '
+          }
+        }
+      })
+      .then((ckeditor) => {
+        editor = ckeditor
+        editor.setData(decodedText)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    })
+
+    function decodeHtmlEntities(text) {
+      let doc = new DOMParser().parseFromString(text, 'text/html')
+      return doc.body.textContent
+    }
+
+    document.querySelector('#editor-form').addEventListener('submit', function (e) {
+      e.preventDefault()
+      const editedText = editor.getData()
+      const formData = new FormData()
+      formData.append('text', editedText)
+      const url = `/editpage/save_edits/${project_id}/`
+      fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken')
+        }
+      }).then((response) => {})
+    })
+
+    function getCookie(name) {
+      let cookieValue = null
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';')
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim()
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
+          }
+        }
+      }
+      return cookieValue
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault() 
+        const nameInput = document.querySelector('#editable-input').value
+        const formData = new FormData()
+        formData.append('name', nameInput)
+        const url = `/editpage/save_name_edits/${project_id}/`
+        fetch(url, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+          }
+        }).then((response) => {})
+        var inputElement = document.getElementById('editable-input')
+        inputElement.blur() 
+      }
+    }
+
+    function copyToClipboard(text) {
+      document.getElementById('save_button').click()
+      var editorContent = editor.getData()
+      let decodededitorText = decodeHtmlEntities(editorContent)
+      const textarea = document.createElement('textarea')
+      textarea.value = decodededitorText
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+    }
+
+    function backToHome() {
+      var project_id = document.querySelector('#projectid').textContent;
+      const url = `/editpage/delete_project/${project_id}/`
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({
+          id: 'project_id',
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        window.location.href = '{% url 'home' %}';
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+  </body>
+</html>

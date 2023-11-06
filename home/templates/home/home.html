@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="{% static 'user/favicon.ico' %}" />
+    <title>Home-Txtfy</title>
+    <link rel="stylesheet" href="{% static 'home/home.css' %}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+
+    <div class="grid-container">
+      <div id="top-container">
+        <div id="heading">
+          <img id="th3" src="{% static 'user/favicon.ico' %}" alt="Logo" />
+          <span id="th1">TxtfyWeb</span>
+        </div>
+        
+
+        <div id="profile" class="profile">
+          <ul>
+            <li id="list1">
+              <img id="profile-img" src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=" width="50px" height="50px" style="border-radius: 20px;" alt="Profile Image" />
+              <ul class="options">
+                <li class="sub-item">
+                  <a id="profitem" href="{% url 'profile' %}">
+                    <p id="pro-file">
+                      <span class="material-icons-outlined">manage_accounts</span>Profile
+                    </p>
+                  </a>
+                </li>
+                <li class="sub-item">
+                  <a id="profitem" href="{% url 'logout' %}">
+                    <p id="log-out">
+                      <span class="material-icons-outlined">logout</span>Logout
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="uploading-page">
+        <p id="notAddedFiles" style="display:none;color:red;position:fixed;margin-left:38rem;font-weight:bolder;font-size:16px;">No image selected</p>
+
+        <div id="drop-area">
+          <form method="post" enctype="multipart/form-data" id="upload-form" action="{% url 'home' %}">
+            {% csrf_token %}
+            <div id="file-input-container">
+              <input type="file" id="file-input" name="image" multiple accept="image/*" />
+              <p id="para">Drag your files here or click in this area.</p>
+              <ul class="input-list" id="file-list"></ul>
+            </div>
+          </form>
+        </div>
+
+        <div id="upload-button">
+          <button class="button-28" type="submit" id="submitButton">Upload</button>
+        </div>
+
+      </div>
+
+      <div id="recents-page">
+        <div id="recents-heading">Your Files</div>
+
+        <div id="topnav">
+          <input type="text" placeholder="Search.." id="searchInput" />
+        </div>
+
+        <div id="scroll-bar">
+          <div id="recent-files">
+            <button class="btn btn-primary" id="view-all">View All</button>
+            <div id="previews">
+              {% if user_projects %}
+              {% for project in user_projects %}
+                <div class="gallery">
+                  <!-- <div class="desc"></div> -->
+                  
+                  <div onclick="openPdfPopup('{% if project.output %}{{ project.output.url }}{% endif %}', 1,{{ project.id }})">
+                    <div id="filename{{ project.id }}" class="filename">
+                      <i class="fa fa-file-pdf-o" style="font-size:16px;color:red"></i>
+                      <span>{{ project.name }}</span>
+                    </div>
+                    <iframe id="pdf{{ project.id }}" class="pdf" src="{% if project.output %}{{ project.output.url }}{% endif %}" frameborder="1"></iframe>
+                  </div>
+
+                  <div class="forIframe" onclick="openPdfPopup('{% if project.output %}{{ project.output.url }}{% endif %}', 1,{{ project.id }})"></div>
+
+                  <div id="pdfModel{{ project.id }}" class="model">
+                    <div class="model-content">
+                      <a class="edit-button" href="{% url 'editpage:index' project_id=project.id %}">Open and Edit</a>
+                      <span class="material-symbols-outlined" id="close" onclick="closePdfPopup({{ project.id }})">
+                        close
+                      </span>
+
+                      <span class="material-symbols-outlined" id="delete" href="javascript:void(0);" onclick="delete_project({{ project.id }})">delete</span>
+                      
+                      <div class="fixed_pdf">
+                        <iframe class="pdfIframe" id="pdfIframe{{ project.id }}" src="{% if project.output %}{{ project.output.url }}{% endif %}" style="width: 100%; height: 100vh; border: none;"></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+    
+              {% else %}
+              <p class="Emptyrecents">No recent files!</p>
+              {% endif %}
+              <div id="noFileMessage" style="display: none;">None of your files matched this search</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <script defer src="{% static 'home/home.js' %}"></script>
+    <script>
+      
+      function delete_project(project_id) {
+        const url = `/home/delete_project/${project_id}/`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',  
+            },
+            body: JSON.stringify({
+                id: project_id,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = '{% url 'home' %}';
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    </script>
+
+    <div class="overlay"></div>
+    <div class="spanner">
+      <div class="loader"></div>
+      <p>Transforming images into text, Your patience is appreciated!</p>
+    </div>
+
+  </body>
+</html>
