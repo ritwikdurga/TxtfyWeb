@@ -9,6 +9,9 @@ from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
+def custom_404_view(request, exception):
+    return render(request, 'user/404.html', status=404)
+
 def signup(request):
     if request.method == "POST":
         if 'eml' in request.POST:

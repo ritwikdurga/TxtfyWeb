@@ -3,6 +3,9 @@ from . import views as user_views
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
+from django.conf.urls import handler404
+
+
 
 urlpatterns = [
     path('signup', user_views.signup, name='signup'),
