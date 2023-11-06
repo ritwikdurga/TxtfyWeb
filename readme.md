@@ -1,6 +1,7 @@
 <div align="center">
   <img src="https://i.ibb.co/pZ9W3Zq/Whats-App-Image-2023-11-05-at-20-03-19.jpg" alt="Logo">
 </div>
+
 ## TxtfyWeb: An OCR-Powered Text Recognition System
 
 Welcome to the TxtfyWeb, An OCR-Based Text Recognition System! TxtfyWeb is a powerful and versatile OCR tool that seamlessly converts scanned images into editable text formats and convert them into pdf's making it user-friendly for sharing and storage. Additionally, it offers accurate text editing capabilities, allowing users to correct recognition errors and make content adjustments. With its features, TxtfyWeb enhances usability by providing both convenience in text distribution and flexibility for content refinement, making it an important tool for students, professionals, and anyone dealing with documents online.
