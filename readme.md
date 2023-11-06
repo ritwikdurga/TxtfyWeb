@@ -13,7 +13,7 @@ Welcome to the TxtfyWeb, An OCR-Based Text Recognition System! TxtfyWeb is a pow
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Screenshots](#screenshots)
-- [Acknowledgments](#acknowledgments)
+- [Acknowledgments](#acknowledgements)
 - [Authors](#authors)
 - [Usage](#usage)
 - [Demo](#demo)
@@ -48,8 +48,6 @@ Before you can start using this project, you need to set up your environment. Fo
 
   - [Tesseract](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe)  
   - [GTK3](https://github.com/tschoonj/GTK-for-Windows-Runtime-Environment-Installer/releases/download/2022-01-04/gtk3-runtime-3.24.31-2022-01-04-ts-win64.exe)
-
-  Save these downloaded files in the project directory.
 
 - **For Mac:**
 
