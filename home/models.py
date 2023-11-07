@@ -18,5 +18,7 @@ class Project(models.Model):
     output = models.FileField(null=True)
 
 class ProjectImage(models.Model):
+    def __str__(self):
+        return self.image.name
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     image = models.ImageField()

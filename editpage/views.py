@@ -140,9 +140,8 @@ def generate_pdf(request):
                 else:
                     pdf_content = HTML(string=html_content).write_pdf()
                 project = get_object_or_404(Project, id=project_id)
-                pdf_file_name = f'{project.name}_{project.id}_.pdf'
+                pdf_file_name = f'{project.name}_{project.id}.pdf'
                 pdf_file_path = default_storage.save(pdf_file_name, ContentFile(pdf_content))
-
                 project.output.name = pdf_file_path
                 project.flag = True
                 project.date = timezone.now()
