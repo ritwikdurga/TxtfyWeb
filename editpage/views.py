@@ -16,8 +16,8 @@ import pytesseract
 import os
 import re
 import platform
-import pytesseract
 
+#Path for tesseract.exe file
 if platform.system() == 'Darwin':  
     pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/Cellar/tesseract/5.3.3/bin/tesseract'
 elif platform.system() == 'Windows':
@@ -25,14 +25,15 @@ elif platform.system() == 'Windows':
 
 
 
-
+#Function for calculating kernel size
 def calculate_kernel_size(image):
     height, width = image.shape[:2]
     kernel_size = min(height, width) // 10
     return (kernel_size, kernel_size)
 
-
+#Function for extracting text from image
 def imgReader(img):
+    #Reading the image using opencv
     image = cv2.imread(img)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     ret, thresh1 = cv2.threshold(
@@ -44,12 +45,14 @@ def imgReader(img):
         dilation, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     img2 = image.copy()
     s = ""
+    #Going all of the contours to find text
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
         rect = cv2.rectangle(img2, (x, y), (x + w, y + h), (0, 255, 0), 2)
         cropped = img2[y:y + h, x:x + w]
         text = pytesseract.image_to_string(cropped)
         s = text+s
+    #Using spellchecker to correct the misspelled words
     spell = SpellChecker()
     s = s.replace(',', ' , ').replace('.', ' . ')
     words = s.split()
@@ -57,23 +60,20 @@ def imgReader(img):
     spell.word_frequency.load_words([',', '.'])
     corrected_text = " ".join(spell.correction(word) if word in misspelled
                               and spell.correction(word) is not None else word for word in words)
-    corrected_text = corrected_text.replace(' , ', ', ').replace(' . ', '.')
+    corrected_text = corrected_text.replace(' , ', ',').replace(' . ', '.')
     return corrected_text
 
 
+#Function for rendering the homepage
 @login_required
 def index(request, project_id):
     project = get_object_or_404(Project, id=project_id, user=request.user)
     text_from_db = project.content
 
     if request.method == "POST":
-        if 'name' in request.POST:
-            project_name = request.POST['name']
-            project.name = project_name
-            project.save()
-        elif 'new_images' in request.FILES:
+        if 'new_images' in request.FILES:   
             new_images = request.FILES.getlist('new_images')
-
+            #Going over all the images and extracting the text
             for new_image in new_images:
                 new_project_image = ProjectImage.objects.create(
                     project=project, image=new_image)
@@ -82,17 +82,20 @@ def index(request, project_id):
                 cleaned_text = re.sub(r'\n+', ' ', extracted_text)
                 text_from_db = text_from_db+cleaned_text
                 text_from_db = text_from_db+"\n"
-
                 new_project_image.save()
+            
+            #Saving the Text content
             project.content = text_from_db
             project.save()
 
         return redirect(reverse('editpage:index', kwargs={'project_id': project_id}))
-
+    
+    #For initial Uploads
     text = ""
     if text_from_db == '':
         existing_project_images = ProjectImage.objects.filter(
             project_id=project_id)
+        #Going over all the images and extracting the text
         for img in existing_project_images:
             image_path = os.getcwd()+img.image.url
             extracted_text = imgReader(image_path)
@@ -100,6 +103,7 @@ def index(request, project_id):
             text = text+cleaned_text
             text = text+"\n"
 
+        #Saving the text content
         project.content = text
         project.save()
 
@@ -114,7 +118,7 @@ def index(request, project_id):
         "p_name": p_name
     })
 
-
+#Function for Saving the Edited text
 @method_decorator(csrf_exempt, name='dispatch')
 class SaveEditsView(View):
     def post(self, request, project_id, *args, **kwargs):
@@ -124,9 +128,11 @@ class SaveEditsView(View):
         project.save()
         return JsonResponse({'status': 'success'})
 
+#Function for generating PDF
 def generate_pdf(request):
     if request.method == 'POST':
         try:
+            #Getting data using Javascript
             data = json.loads(request.body.decode('utf-8'))
             html_content = data.get('html_content')
             background = data.get('background')
@@ -135,6 +141,7 @@ def generate_pdf(request):
             if html_content:
                 if background:
                     background_image_path = background[5:-2]
+
                     background_css = CSS(string=f'@page {{ size: A4; background-image: url("{background_image_path}"); background-size: cover; }}')
                     pdf_content = HTML(string=html_content).write_pdf(stylesheets=[background_css])
                 else:
@@ -158,11 +165,13 @@ def generate_pdf(request):
         return HttpResponse("Method not allowed", status=405)
 
 
+#Function for saving the edits for name
 def save_name_edits(request, project_id):
     if request.method == 'POST':
         name = request.POST.get('name')
         project = get_object_or_404(Project, id=project_id, user=request.user)
         if 'name' in request.POST:
+            #Getting name from the post method
             project_name = request.POST['name']
             if project_name != '':
                 project.name = project_name
@@ -171,14 +180,14 @@ def save_name_edits(request, project_id):
         return JsonResponse({'message': 'Name data saved successfully.'})
     else:
         return JsonResponse({'error': 'Invalid request method.'})
-    
-
+  
+#Function for deleting the project
 def delete_project(request,project_id):
     if request.method == 'POST':
         project = get_object_or_404(Project,id=project_id)
         if project.flag != True :
             project.delete()
-
+            
         return JsonResponse({'message': 'Project deleted successfully'})
     else:
         return JsonResponse({'error': 'Invalid request method'})

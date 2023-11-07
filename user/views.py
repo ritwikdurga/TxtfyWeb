@@ -9,10 +9,12 @@ from django.contrib.auth.views import PasswordResetView
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
+#Function for signing up
 def signup(request):
     if request.method == "POST":
         if 'eml' in request.POST:
             email = request.POST['eml']
+            #Verifying whether user is in the database or not
             if User.objects.filter(email=email).exists():
                 messages.error(
                     request, "Email already registered. Please Sign In")
@@ -33,14 +35,14 @@ def signup(request):
             if password == cpassword:
                 hashed_password = make_password(password)
                 hashed_password = password
-
+                #Saving the name and password in the password
                 user = User.objects.create_user(
                     username=email, email=email, password=hashed_password, first_name=first_name, last_name=last_name)
                 messages.success(request, 'Account created successfully')
                 return redirect('signin')
     return render(request, 'user/signup_email.html')
 
-
+#Function for the profile 
 @login_required
 def profile(request):
     if 'error_messages' in request.session:
@@ -62,7 +64,7 @@ def profile(request):
             return redirect('profile')
     return render(request, 'user/user_profile.html', {'user': user})
 
-
+#Function for changing passwords
 @login_required
 def changepwd(request):
     if request.method == 'POST':
@@ -70,7 +72,7 @@ def changepwd(request):
         old_password = request.POST.get('opwd')
         new_password = request.POST.get('pwd')
         confirm_password = request.POST.get('cpwd')
-
+        #Checking if the password is same as the old password
         if check_password(old_password, user.password):
             if new_password == old_password:
                 messages.error(request, "Password already in use")
@@ -90,6 +92,7 @@ def changepwd(request):
 
     return render(request, 'user/change_pwd.html', {'user': request.user})
 
+#Class for Password Reset
 class CustomPasswordResetView(PasswordResetView):
     def form_valid(self, form):
         email = form.cleaned_data['email']
