@@ -3,3 +3,4 @@ Django==4.2.7
 opencv-python==4.8.1.78
 pytesseract==0.3.10
 weasyprint==60.1
+pyspellchecker==0.7.2
