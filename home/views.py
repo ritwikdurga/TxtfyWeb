@@ -12,13 +12,14 @@ def upload_images(request):
     if request.method == "POST":
         project = Project.objects.create(user=user)
         images = request.FILES.getlist('image')
-        #Going through all images and adding them to the database of the project
+        #Iterating through all images and adding them to the database of the project
         for image in images:
             project_image = ProjectImage.objects.create(
                 project=project, image=image)
             project_image.save()
         return redirect('editpage:index', project_id=project.id)
     obj = Project.objects.filter(user=user)
+    #removes the unsaved projects from database
     for p in obj:
         if p.flag == False:
             p.delete()

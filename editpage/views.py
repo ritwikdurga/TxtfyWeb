@@ -95,7 +95,7 @@ def index(request, project_id):
     if text_from_db == '':
         existing_project_images = ProjectImage.objects.filter(
             project_id=project_id)
-        #Going over all the images and extracting the text
+        #Iterating over all the images and extracting the text
         for img in existing_project_images:
             image_path = os.getcwd()+img.image.url
             extracted_text = imgReader(image_path)
@@ -187,7 +187,7 @@ def delete_project(request,project_id):
         project = get_object_or_404(Project,id=project_id)
         if project.flag != True :
             project.delete()
-            
+
         return JsonResponse({'message': 'Project deleted successfully'})
     else:
         return JsonResponse({'error': 'Invalid request method'})
