@@ -15,6 +15,21 @@
   opacity: 0.86;
 }
 
+#about-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.button-decoration {
+  color: #18181b;
+  padding: 10px 20px;
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 14px;
+}
+
 .Emptyrecents{
   color: white;
   text-align: center;
@@ -216,7 +231,7 @@ body::-webkit-scrollbar-thumb {
   width: 35px;
   height: 40px;
   position:absolute;
-  top:10%;
+  top:24%;
 }
 
 .grid-container {
