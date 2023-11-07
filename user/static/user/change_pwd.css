@@ -57,7 +57,7 @@
 /* Add styles for the left half of the page with the image */
 .d2 {
   position: absolute;
-  width: 50%; /* Set the width to occupy half of the page */
+  width: 40%; /* Set the width to occupy half of the page */
   top: 18.2%; /* Adjust the top value as needed */
   left: 5%; /* Position it on the left side */
   padding: 20px;
