@@ -93,7 +93,13 @@ function generatePDF() {
 
 function DownloadPDF() {
   const editorContent = editor.getData();
-  suggestedFileName = "output";
+  var inputElement = document.getElementById("editable-input");
+  var inputValue = inputElement.value;
+  if(inputValue){
+    suggestedFileName = inputValue;
+  }else{
+    suggestedFileName = "Untitled";
+  }
   background = bcg;
 
   const data = {
