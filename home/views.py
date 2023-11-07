@@ -38,3 +38,7 @@ def delete_project(request, project_id):
         return JsonResponse({'message': 'Project deleted successfully'})
     else:
         return JsonResponse({'error': 'Invalid request method'})
+
+def about_us(request):
+    
+    return render(request, 'home/about_us.html')
