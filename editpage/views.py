@@ -19,7 +19,7 @@ import platform
 import pytesseract
 
 if platform.system() == 'Darwin':  
-    pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/Cellar/tesseract/5.3.2_1/bin/tesseract'
+    pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/Cellar/tesseract/5.3.3/bin/tesseract'
 elif platform.system() == 'Windows':
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
@@ -140,7 +140,7 @@ def generate_pdf(request):
                 else:
                     pdf_content = HTML(string=html_content).write_pdf()
                 project = get_object_or_404(Project, id=project_id)
-                pdf_file_name = f'{project.name}.pdf'  
+                pdf_file_name = f'{project.name}_{project.id}_.pdf'
                 pdf_file_path = default_storage.save(pdf_file_name, ContentFile(pdf_content))
 
                 project.output.name = pdf_file_path
