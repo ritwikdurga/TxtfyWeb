@@ -49,7 +49,14 @@ def profile(request):
     if request.method == "POST":
         if 'name' in request.POST:
             new_name = request.POST.get('name')
-            user.first_name, user.last_name = new_name.split(" ", 1)
+            new_name = request.POST.get('name')
+            if " " in new_name:
+                first_name, last_name = new_name.split(" ", 1)
+            else:
+                first_name = new_name
+                last_name = " "
+            user.first_name=first_name
+            user.last_name=last_name
             user.save()
             messages.success(request, 'Name Updated Successfully')
             return redirect('profile')
