@@ -10,13 +10,13 @@ Welcome to the TxtfyWeb, An OCR-Based Text Recognition System! TxtfyWeb is a pow
 ## Table of Contents
 
 - [Installation](#installation)
+- [Run-locally](#run-locally)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Screenshots](#screenshots)
+- [Usage](#usage)
 - [Acknowledgments](#acknowledgements)
 - [Authors](#authors)
-- [Usage](#usage)
-- [Demo](#demo)
 
 ## Installation
 
